@@ -1,5 +1,6 @@
 package com.cybertek.utility;
 
+import com.cybertek.tests.day09_ExplicitWait.Driver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,17 +17,15 @@ public  abstract class TestBase {
 
     @BeforeEach
     public void setUpWebDriver() {
-       // WebDriverManager.chromedriver().setup();
-        //driver = new ChromeDriver();
-        //driver.manage().window().maximize();
 
-        driver=WebDriverFactory.getDriver("chrome");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        Driver.getDriver();
+       // driver=WebDriverFactory.getDriver("chrome");
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
     @AfterEach
     public void closeBrowser(){
-        driver.quit();
+        Driver.getDriver().quit();
     }
 
 }

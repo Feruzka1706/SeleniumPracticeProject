@@ -4,11 +4,12 @@ import com.cybertek.utility.TestBase;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class AlertPracticeTest extends TestBase {
    //  regular(ok), confirm(ok and cancel), prompt(enter text)
     @Test
-    public void testJavaScriptaAert(){
+    public void testJavaScriptaAert() throws InterruptedException {
 
         driver.get("http://practice.cybertekschool.com/javascript_alerts");
         driver.findElement(By.xpath("//button[text()='Click for JS Alert']")).click();
@@ -42,9 +43,12 @@ public class AlertPracticeTest extends TestBase {
         //this is how we can enter text into prompt
 
         driver.switchTo().alert().accept();
+
+        Thread.sleep(2000);
+
+        WebElement message=driver.findElement(By.xpath("//p[@id='result']"));
+        System.out.println("message.getText() = " + message.getText());
         //
-
-
 
 
         System.out.println("THE END");
