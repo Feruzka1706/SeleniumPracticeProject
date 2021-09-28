@@ -200,7 +200,8 @@ public class WebOrderUtility {
         sideBar2.click();
         BrowserUtil.waitFor(2);
 
-       List<WebElement> allProductNames=Driver.getDriver().findElements(By.xpath(" //tbody/tr/td[@width='78%']//tr/td[1]"));
+       List<WebElement> allProductNames=Driver.getDriver().findElements(By.xpath("//tbody/tr/td[@width='78%']//tr/td[1]"));
+                                                                                 //table[@class='ProductsTable']//tr/td[1]
 
        List<String> allProducts=new ArrayList<>();
 
