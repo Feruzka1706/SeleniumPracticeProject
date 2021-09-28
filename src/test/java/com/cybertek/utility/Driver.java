@@ -1,4 +1,4 @@
-package com.cybertek.tests.day09_ExplicitWait;
+package com.cybertek.utility;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -31,6 +31,11 @@ public class Driver {
 
     }
 
+    /**
+     * Return obj with only one WebDriver instance
+     * @return
+     */
+
      public static WebDriver getDriver(){
          if(obj==null){
              WebDriverManager.chromedriver().setup();
@@ -40,6 +45,24 @@ public class Driver {
          }else{
              //System.out.println("You already have object, use existing one");
              return obj;
+         }
+     }
+
+
+    /**
+     * Quitting the browser and setting the value of
+     * WebDriver instaqnce to null because you can re-use already quitted driver
+     */
+    public static void closeBrowser(){
+         //check if we have WebDriver instance or not
+         //basically checking if obj is null or not
+         //if not null
+             //quit the browser
+             //make it null, because once quit it can not be used
+
+         if(obj!=null){
+             obj.quit();
+             obj = null;
          }
      }
 }

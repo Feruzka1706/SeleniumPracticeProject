@@ -1,6 +1,5 @@
 package com.cybertek.utility;
 
-import com.cybertek.tests.day09_ExplicitWait.Driver;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
@@ -12,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,6 +20,7 @@ public class WebOrderUtility {
 
     public static void openWebOrderApp(){
         Driver.getDriver().get("http://secure.smartbearsoftware.com/samples/TestComplete11/WebOrders/Login.aspx");
+       // Driver.getDriver().get(ConfigReader.read("weborder_url") );
 
     }
 
@@ -73,6 +72,19 @@ public class WebOrderUtility {
     }
     //Negative scenario >> any credential can be entered, BUT only correct one will be accepted
 
+
+    /**
+     * Check for login error message is visible or not , by calling the BrowserUtil method we created
+     * @return true if error message displayed , false if not
+     */
+
+    public static boolean loginErrorMsgVisible(){
+
+        boolean elementFound =
+                BrowserUtil.checkVisibilityOfElement(By.xpath("//span[. ='Invalid Login or Password.']"),2);
+        return elementFound ;
+    }
+
     public static void logout(){
         // logout link has id of ctl00_logout
         Driver.getDriver().findElement(By.id("ctl00_logout")).click();
@@ -82,14 +94,12 @@ public class WebOrderUtility {
 
         boolean result=false;
         //h2[normalize-space(.)='List of All Orders'] >>> for the element of the header
-
+        WebDriverWait wait=new WebDriverWait(Driver.getDriver(),2);
         try{
-            WebDriverWait wait=new WebDriverWait(Driver.getDriver(),2);
-           // WebElement header=Driver.getDriver().findElement(By.xpath("//h2[normalize-space(.)='List of All Orders']"));
             wait.until(visibilityOfElementLocated(By.xpath("//h2[normalize-space(.)='List of All Orders']") ) );
-            System.out.println("Element was identified");
+           // wait.until(ExpectedConditions.urlToBe("http://secure.smartbearsoftware.com/samples/TestComplete11/WebOrders/Default.aspx"));
+            System.out.println("At the right page");
             result=true;
-
         }catch (TimeoutException e){
             System.out.println("No Such element! You are not at the right page");
         }
@@ -110,6 +120,16 @@ public class WebOrderUtility {
 
         return result;
     }
+
+
+    public static String getUserNameFromWelcomeMessage(){
+        WebElement loginInfoArea=Driver.getDriver().findElement(By.cssSelector("div.login_info")) ;
+        String welcomeMsg=loginInfoArea.getText();
+        // Welcome, Tester! | Logout
+        return welcomeMsg.replace("Welcome, ","").replace("! | Logout","");
+        //we are replacing empty "" unnecessary words and getting the name of the welcome message
+    }
+
 
     public static void selectSideBarTab(String tabName){
         WebElement sideBar1=Driver.getDriver().findElement(By.xpath("//ul[@id='ctl00_menu']/li[1]/a"));
@@ -137,6 +157,8 @@ public class WebOrderUtility {
         WebElement checkAllBtn=Driver.getDriver().findElement(By.xpath("//a[@id='ctl00_MainContent_btnCheckAll']"));
         checkAllBtn.click();
         BrowserUtil.waitFor(4);
+        //input[id^='ctl00_MainContent_orderGrid'] >>>Css.selector (StartsWith)
+        //input[id$='OrderSelector'] >>>Css.selector (EndsWith)
         List<WebElement> allCheckCheckBoxes =Driver.getDriver().findElements(By.xpath("//tbody/tr/td/input[@type='checkbox']"));
 
         for(WebElement eachCheckBox : allCheckCheckBoxes){
@@ -539,3 +561,5 @@ public class WebOrderUtility {
 
 
 }
+
+

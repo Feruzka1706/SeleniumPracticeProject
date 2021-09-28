@@ -1,14 +1,8 @@
 package com.cybertek.utility;
 
-import com.cybertek.tests.day09_ExplicitWait.Driver;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
 
 public  abstract class TestBase {
 
@@ -18,14 +12,15 @@ public  abstract class TestBase {
     @BeforeEach
     public void setUpWebDriver() {
 
-        Driver.getDriver();
+        driver=Driver.getDriver();
        // driver=WebDriverFactory.getDriver("chrome");
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
     @AfterEach
     public void closeBrowser(){
-        Driver.getDriver().quit();
+        //quit browser + make it null so we can get new one when we ask for it again
+       Driver.closeBrowser();
     }
 
 }

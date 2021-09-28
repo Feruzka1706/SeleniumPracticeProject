@@ -1,4 +1,4 @@
-package com.cybertek.tests.day09_ExplicitWait;
+package com.cybertek.tests.day10_driver_method_practice_properties;
 
 import com.cybertek.utility.BrowserUtil;
 import com.cybertek.utility.TestBase;
